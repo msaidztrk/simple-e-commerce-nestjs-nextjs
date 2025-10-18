@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
-      "~/*": ["*"]
+      "~/*": ["modules/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
