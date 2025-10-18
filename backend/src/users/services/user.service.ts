@@ -12,13 +12,14 @@ export class UserService {
     private readonly userPermissionRepository: UserPermissionRepository,
   ) {}
 
-  async createUser(email: string, password: string, firstName: string, lastName: string, role: Role = Role.USER): Promise<User> {
+  async createUser(email: string, password: string, firstName: string, lastName: string, role: Role = Role.USER, is_active: boolean = true): Promise<User> {
     const user = this.userRepository.create({
       email,
       password,
       firstName,
       lastName,
       role,
+      is_active,
     });
     return this.userRepository.save(user);
   }
@@ -43,6 +44,12 @@ export class UserService {
   async deleteUser(id: number): Promise<void> {
     await this.userRepository.delete(id);
   }
+
+  async updateUserStatus(id: number, is_active: boolean): Promise<User | null> {
+    await this.userRepository.update(id, { is_active });
+    return this.findById(id);
+  }
+
   async updateUserPermission(userId: number, permissionId: string, newValue: boolean): Promise<User | null> {
     const user = await this.findById(userId);
     if (!user) return null;

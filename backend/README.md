@@ -76,11 +76,51 @@ Copy `.env.example` to `.env` and update the `DATABASE_URL` value to point to yo
 - Use `npx prisma migrate` to manage schema migrations.
 - Use generated client via `PrismaService`.
 
-## Testing
-- Unit tests: `npm run test`
-- E2E tests: `npm run test:e2e`
+## API Documentation
 
-## Deployment notes (enterprise)
+### User Management
+
+#### Create User
+- **POST** `/users`
+- **Body**: `{ "email": "string", "password": "string", "firstName": "string", "lastName": "string", "role": "user|admin|super_admin|customer" (optional), "is_active": boolean (optional, default true) }`
+- **Response**: User object
+
+#### Get All Users
+- **GET** `/users`
+- **Response**: Array of User objects
+
+#### Get User by ID
+- **GET** `/users/:id`
+- **Response**: User object or null
+
+#### Update User
+- **PUT** `/users/:id`
+- **Body**: Partial User object
+- **Response**: Updated User object or null
+
+#### Delete User
+- **DELETE** `/users/:id`
+- **Response**: void
+
+#### Update User Status (Active/Inactive)
+- **PATCH** `/users/:id/status`
+- **Body**: `{ "is_active": boolean }`
+- **Response**: Updated User object or null
+- **Purpose**: Activate or deactivate a user account without deleting it. Useful for soft-deletion or temporary suspensions.
+
+### Role Management
+
+#### Update Role Permissions
+- **PATCH** `/roles/:role/permissions`
+- **Body**: `{ "permissions": ["login", "user_add", ...] }`
+- **Response**: `{ "success": boolean, "permissions": Permission[] }`
+
+### User Permission Management
+
+#### Update User Permission
+- **PATCH** `/users/:id/permissions`
+- **Body**: `{ "permission_id": "string", "value": boolean }`
+- **Response**: `{ "success": boolean, "permissions": UserPermission[] }`
 - Use connection pooling and set reasonable connection limits.
 - Monitor slow queries and setup read replicas for scaling reads.
 - Use CI to run migrations and health checks before routing traffic.

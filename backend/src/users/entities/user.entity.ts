@@ -26,6 +26,9 @@ export class User {
   })
   role: Role;
 
+  @Column({ default: true })
+  is_active: boolean;
+
   @OneToMany(() => UserPermission, userPermission => userPermission.user)
   userPermissions: UserPermission[];
 
