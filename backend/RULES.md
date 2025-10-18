@@ -13,6 +13,7 @@ applyTo: '**/backend/**'
 8. **Only Change as Specified**: Only modify or add code/files as explicitly requested. Do not refactor or change unrelated code.
 9. **Testing**: Write unit and e2e tests for all business logic and API endpoints.
 10. **Documentation**: Document all modules, services, and repositories with clear comments and README files as needed.
+12. **Documentation on feature creation**: Whenever a new feature is created, the developer must update the project README or add a dedicated document describing the feature, its API, required environment variables, and database migration steps.
 11. **No Comments**: Write no comments; function and variable names should clearly indicate the specific action. Remove all existing comments from the codebase.
 
 > These rules must be followed for all code in the `backend` folder.

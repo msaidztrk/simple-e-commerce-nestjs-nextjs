@@ -25,74 +25,73 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Project setup
+# Backend README
 
-```bash
-$ npm install
+This backend is a NestJS application designed for a long-term, enterprise-grade e‑commerce platform. It uses a modular structure and is being migrated to Prisma as the canonical ORM for MySQL.
+
+## What you will find in this repo
+- NestJS application (src)
+- Prisma schema (prisma/schema.prisma)
+- PrismaService + module for NestJS integration
+- Users module (refactored for enterprise structure)
+
+## Quick start
+
+1. Install dependencies
+
+```powershell
+npm install
 ```
 
-## Compile and run the project
+2. Generate Prisma client
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```powershell
+npx prisma generate
 ```
 
-## Run tests
+3. Create and run migrations (development)
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```powershell
+npx prisma migrate dev --name init
 ```
 
-## Deployment
+4. Start dev server
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```powershell
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Environment
+Copy `.env.example` to `.env` and update the `DATABASE_URL` value to point to your MySQL instance.
 
-## Resources
+## Architecture & Conventions
+- Modules are domain-scoped (e.g., `users/`).
+- Each module contains subfolders: `controllers/`, `services/`, `repositories/`, `entities/`.
+- Use Prisma for database access via `PrismaService`.
+- Do not use `synchronize: true` or similar in production. Always use migrations.
+- Use `~/*` path alias for root imports.
 
-Check out a few resources that may come in handy when working with NestJS:
+## Prisma
+- Schema is in `prisma/schema.prisma`.
+- Use `npx prisma migrate` to manage schema migrations.
+- Use generated client via `PrismaService`.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Testing
+- Unit tests: `npm run test`
+- E2E tests: `npm run test:e2e`
 
-## Support
+## Deployment notes (enterprise)
+- Use connection pooling and set reasonable connection limits.
+- Monitor slow queries and setup read replicas for scaling reads.
+- Use CI to run migrations and health checks before routing traffic.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Adding features / documentation rule
+When creating a new feature, always update the relevant README or documentation files describing:
+- Purpose of the feature
+- API endpoints and request/response examples
+- Database schema changes and migration instructions
+- Any new environment variables
 
-## Stay in touch
+Failure to update docs will be flagged during code review.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
