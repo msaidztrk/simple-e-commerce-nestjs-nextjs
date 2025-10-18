@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './user.entity';
-import { Role } from './role.enum';
-import { UserRepository } from './user.repository';
-import { UserPermissionRepository } from './user-permission.repository';
-import { UserPermission } from './user-permission.entity';
+import { User } from '../entities/user.entity';
+import { Role } from '../role.enum';
+import { UserRepository } from '../repositories/user.repository';
+import { UserPermissionRepository } from '../repositories/user-permission.repository';
+import { UserPermission } from '../entities/user-permission.entity';
 
 @Injectable()
 export class UserService {

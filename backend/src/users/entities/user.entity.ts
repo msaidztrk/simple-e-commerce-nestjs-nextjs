@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { UserPermission } from './user-permission.entity';
-import { Role } from './role.enum';
+import { Role } from '../role.enum';
 
 @Entity('users')
 export class User {
@@ -25,7 +25,6 @@ export class User {
     default: Role.USER,
   })
   role: Role;
-
 
   @OneToMany(() => UserPermission, userPermission => userPermission.user)
   userPermissions: UserPermission[];
